@@ -2,13 +2,18 @@ from fastmcp import FastMCP
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
+import certifi
 
 load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
 
 # Create MongoDB client
-client = MongoClient(MONGO_URI)
+client = MongoClient(
+    MONGO_URI,
+    tls=True,
+    tlsCAFile=certifi.where()
+)
 
 # Database
 db = client["expense_tracker"]
